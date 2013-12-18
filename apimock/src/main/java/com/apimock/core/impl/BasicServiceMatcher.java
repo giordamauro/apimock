@@ -7,18 +7,18 @@ import com.apimock.core.model.ServiceIdentifier;
 import com.apimock.core.model.ServiceMatcher;
 import com.apimock.core.model.ServiceParameters;
 
-public class ServiceMatcherImpl implements ServiceMatcher {
+public class BasicServiceMatcher implements ServiceMatcher {
 
 	private final ServiceIdentifier identifier;
 
 	private final int priority;
 
-	public ServiceMatcherImpl(ServiceIdentifier identifier, int priority) {
+	public BasicServiceMatcher(ServiceIdentifier identifier, int priority) {
 		this.identifier = identifier;
 		this.priority = priority;
 	}
 
-	public ServiceMatcherImpl(ServiceIdentifier identifier) {
+	public BasicServiceMatcher(ServiceIdentifier identifier) {
 		this(identifier, 0);
 	}
 
@@ -56,10 +56,10 @@ public class ServiceMatcherImpl implements ServiceMatcher {
 			return false;
 		if (obj == this)
 			return true;
-		if (!(obj instanceof ServiceMatcherImpl))
+		if (!(obj instanceof BasicServiceMatcher))
 			return false;
 
-		ServiceMatcherImpl serviceMatcher = (ServiceMatcherImpl) obj;
+		BasicServiceMatcher serviceMatcher = (BasicServiceMatcher) obj;
 		EqualsBuilder equalsBuilder = new EqualsBuilder();
 		equalsBuilder.append(identifier, serviceMatcher.identifier);
 		equalsBuilder.append(priority, serviceMatcher.priority);

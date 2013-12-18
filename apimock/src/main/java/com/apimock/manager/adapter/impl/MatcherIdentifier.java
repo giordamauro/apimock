@@ -1,8 +1,5 @@
 package com.apimock.manager.adapter.impl;
 
-import java.util.List;
-import java.util.Map;
-
 import com.apimock.core.model.HttpMethod;
 
 public class MatcherIdentifier {
@@ -13,11 +10,7 @@ public class MatcherIdentifier {
 
 	private int matcherPriority;
 
-	private Map<String, List<String>> queryParams;
-
-	private Map<String, List<String>> headers;
-
-	private String matcher;
+	private CustomServiceMatcher matcher;
 
 	public HttpMethod getMethod() {
 		return method;
@@ -35,11 +28,11 @@ public class MatcherIdentifier {
 		this.path = path;
 	}
 
-	public String getMatcher() {
+	public CustomServiceMatcher getMatcher() {
 		return matcher;
 	}
 
-	public void setMatcher(String matcher) {
+	public void setMatcher(CustomServiceMatcher matcher) {
 		this.matcher = matcher;
 	}
 
@@ -49,21 +42,5 @@ public class MatcherIdentifier {
 
 	public void setMatcherPriority(int matcherPriority) {
 		this.matcherPriority = matcherPriority;
-	}
-
-	public Map<String, List<String>> getQueryParams() {
-		return queryParams;
-	}
-
-	public void setQueryParams(Map<String, List<String>> queryParams) {
-		this.queryParams = queryParams;
-	}
-
-	public Map<String, List<String>> getHeaders() {
-		return headers;
-	}
-
-	public void setHeaders(Map<String, List<String>> headers) {
-		this.headers = headers;
 	}
 }

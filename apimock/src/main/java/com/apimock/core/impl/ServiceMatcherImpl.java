@@ -6,26 +6,35 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import com.apimock.core.model.ServiceIdentifier;
 import com.apimock.core.model.ServiceMatcher;
 import com.apimock.core.model.ServiceParameters;
+import com.apimock.manager.adapter.impl.CustomServiceMatcher;
 
-public class BasicServiceMatcher implements ServiceMatcher {
+public class ServiceMatcherImpl implements ServiceMatcher {
 
 	private final ServiceIdentifier identifier;
 
 	private final int priority;
 
-	public BasicServiceMatcher(ServiceIdentifier identifier, int priority) {
+	private CustomServiceMatcher customMatcher;
+
+	public ServiceMatcherImpl(ServiceIdentifier identifier, int priority) {
 		this.identifier = identifier;
 		this.priority = priority;
 	}
 
-	public BasicServiceMatcher(ServiceIdentifier identifier) {
+	public ServiceMatcherImpl(ServiceIdentifier identifier) {
 		this(identifier, 0);
 	}
 
 	@Override
 	public boolean evaluate(ServiceParameters serviceParameters) {
 
-		return identifier.equals(serviceParameters.getIdentifier());
+		boolean eval = identifier.equals(serviceParameters.getIdentifier());
+
+		if (eval && customMatcher != null) {
+			eval = customMatcher.evaluate(serviceParameters);
+		}
+
+		return eval;
 	}
 
 	@Override
@@ -39,11 +48,20 @@ public class BasicServiceMatcher implements ServiceMatcher {
 		return priority;
 	}
 
+	public CustomServiceMatcher getCustomMatcher() {
+		return customMatcher;
+	}
+
+	public void setCustomMatcher(CustomServiceMatcher customMatcher) {
+		this.customMatcher = customMatcher;
+	}
+
 	@Override
 	public int hashCode() {
 		HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(17, 31);
 		hashCodeBuilder.append(identifier);
 		hashCodeBuilder.append(priority);
+		hashCodeBuilder.append(customMatcher);
 
 		int hashCode = hashCodeBuilder.toHashCode();
 
@@ -56,13 +74,14 @@ public class BasicServiceMatcher implements ServiceMatcher {
 			return false;
 		if (obj == this)
 			return true;
-		if (!(obj instanceof BasicServiceMatcher))
+		if (!(obj instanceof ServiceMatcherImpl))
 			return false;
 
-		BasicServiceMatcher serviceMatcher = (BasicServiceMatcher) obj;
+		ServiceMatcherImpl serviceMatcher = (ServiceMatcherImpl) obj;
 		EqualsBuilder equalsBuilder = new EqualsBuilder();
 		equalsBuilder.append(identifier, serviceMatcher.identifier);
 		equalsBuilder.append(priority, serviceMatcher.priority);
+		equalsBuilder.append(customMatcher, serviceMatcher.customMatcher);
 
 		return equalsBuilder.isEquals();
 	}

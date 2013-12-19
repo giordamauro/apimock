@@ -6,30 +6,30 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import com.apimock.core.model.ServiceParameters;
 import com.apimock.manager.CustomServiceFilter;
 
-public class CompositeServiceMatcher implements CustomServiceFilter {
+public class CompositeServiceFilter implements CustomServiceFilter {
 
 	private static final long serialVersionUID = 7635135650776707144L;
 
-	private final CustomServiceFilter matcher1;
+	private final CustomServiceFilter filter1;
 
-	private final CustomServiceFilter matcher2;
+	private final CustomServiceFilter filter2;
 
-	public CompositeServiceMatcher(CustomServiceFilter customMatcher1, CustomServiceFilter customMatcher2) {
-		this.matcher1 = customMatcher1;
-		this.matcher2 = customMatcher2;
+	public CompositeServiceFilter(CustomServiceFilter customMatcher1, CustomServiceFilter customMatcher2) {
+		this.filter1 = customMatcher1;
+		this.filter2 = customMatcher2;
 	}
 
 	@Override
 	public boolean evaluate(ServiceParameters serviceParameters) {
 
-		return matcher1.evaluate(serviceParameters) && matcher2.evaluate(serviceParameters);
+		return filter1.evaluate(serviceParameters) && filter2.evaluate(serviceParameters);
 	}
 
 	@Override
 	public int hashCode() {
 		HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(17, 31);
-		hashCodeBuilder.append(matcher1);
-		hashCodeBuilder.append(matcher2);
+		hashCodeBuilder.append(filter1);
+		hashCodeBuilder.append(filter2);
 
 		int hashCode = hashCodeBuilder.toHashCode();
 
@@ -42,13 +42,13 @@ public class CompositeServiceMatcher implements CustomServiceFilter {
 			return false;
 		if (obj == this)
 			return true;
-		if (!(obj instanceof CompositeServiceMatcher))
+		if (!(obj instanceof CompositeServiceFilter))
 			return false;
 
-		CompositeServiceMatcher serviceMatcher = (CompositeServiceMatcher) obj;
+		CompositeServiceFilter serviceMatcher = (CompositeServiceFilter) obj;
 		EqualsBuilder equalsBuilder = new EqualsBuilder();
-		equalsBuilder.append(matcher1, serviceMatcher.matcher1);
-		equalsBuilder.append(matcher2, serviceMatcher.matcher2);
+		equalsBuilder.append(filter1, serviceMatcher.filter1);
+		equalsBuilder.append(filter2, serviceMatcher.filter2);
 
 		return equalsBuilder.isEquals();
 	}

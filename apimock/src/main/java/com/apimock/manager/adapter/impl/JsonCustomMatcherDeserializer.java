@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.apimock.manager.CustomServiceFilter;
-import com.apimock.manager.filter.CompositeServiceMatcher;
+import com.apimock.manager.filter.CompositeServiceFilter;
 import com.apimock.manager.filter.RequestCustomMatcher;
 import com.apimock.utils.JsonCustomDeserializer;
 import com.apimock.utils.SpringXmlUtils;
-import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -17,8 +16,6 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 public class JsonCustomMatcherDeserializer implements JsonCustomDeserializer<CustomServiceFilter> {
-
-	private Gson gson;
 
 	// TODO desacoplar los Deserializers
 
@@ -38,8 +35,8 @@ public class JsonCustomMatcherDeserializer implements JsonCustomDeserializer<Cus
 
 			Type mapType = new TypeToken<Map<String, List<String>>>() {
 			}.getType();
-			Map<String, List<String>> queryParamsMap = gson.fromJson(queryParams, mapType);
-			Map<String, List<String>> headersMap = gson.fromJson(headers, mapType);
+			Map<String, List<String>> queryParamsMap = context.deserialize(queryParams, mapType);
+			Map<String, List<String>> headersMap = context.deserialize(headers, mapType);
 
 			customMatcher = new RequestCustomMatcher(queryParamsMap, headersMap);
 
@@ -50,17 +47,13 @@ public class JsonCustomMatcherDeserializer implements JsonCustomDeserializer<Cus
 
 		} else if (type.equals("composite")) {
 
-			customMatcher = gson.fromJson(data, CompositeServiceMatcher.class);
+			customMatcher = context.deserialize(data, CompositeServiceFilter.class);
 
 		} else {
 			throw new IllegalStateException("Type not supported");
 		}
 
 		return customMatcher;
-	}
-
-	public void setGson(Gson gson) {
-		this.gson = gson;
 	}
 
 	@Override

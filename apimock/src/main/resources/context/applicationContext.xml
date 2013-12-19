@@ -46,16 +46,6 @@
 		    </util:list>
 		</constructor-arg>
 	</bean>
-	
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-		<property name="targetObject" ref="jsonCustomMatcherDeserializer" />
-		<property name="targetMethod" value="setGson" />
-		<property name="arguments">
-		    <list>
-		        <ref bean="gson"/>
-		    </list>
-		</property>
-	</bean>
 
 	<bean id="mockManagerAdapter" class="com.apimock.manager.adapter.impl.MockManagerAdapterStubImpl">
 		<constructor-arg type="com.google.gson.Gson" ref="gson"/>

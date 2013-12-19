@@ -1,4 +1,4 @@
-package com.apimock.utils;
+package com.apimock.utils.json;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ public class GsonFactoryBean implements FactoryBean<Gson> {
 
 	private final GsonBuilder gs;
 
-	private final List<JsonCustomDeserializer<?>> deserializers;
+	private final List<CustomJsonDeserializer<?>> deserializers;
 
-	public GsonFactoryBean(GsonBuilder gs, List<JsonCustomDeserializer<?>> deserializers) {
+	public GsonFactoryBean(GsonBuilder gs, List<CustomJsonDeserializer<?>> deserializers) {
 		this.gs = gs;
 		this.deserializers = deserializers;
 	}
@@ -22,7 +22,7 @@ public class GsonFactoryBean implements FactoryBean<Gson> {
 	public Gson getObject() throws Exception {
 
 		if (deserializers != null) {
-			for (JsonCustomDeserializer<?> deserializer : deserializers) {
+			for (CustomJsonDeserializer<?> deserializer : deserializers) {
 
 				gs.registerTypeAdapter(deserializer.getDeserializingClass(), deserializer);
 			}

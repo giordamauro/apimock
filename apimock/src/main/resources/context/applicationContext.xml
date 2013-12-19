@@ -32,17 +32,49 @@
 
 	<bean id="gsonBuilder" class="com.google.gson.GsonBuilder"/>
     
-    <bean id="jsonInputStreamDeserializer" class="com.apimock.consumer.adapter.impl.JsonInputStreamDeserializer"/>
-    
-	<bean id="jsonCustomMatcherDeserializer" class="com.apimock.manager.adapter.impl.JsonCustomMatcherDeserializer"/>
+    <bean id="inputStreamDeserializer" class="com.apimock.utils.json.DataTypeJsonDeserializer">
+		<constructor-arg type="java.lang.Class" value="java.io.InputStream"/>
+		<constructor-arg type="java.util.Map">
+			<util:map>
+				<entry key="plain">
+					<bean class="com.apimock.consumer.adapter.impl.StringJsonDeserializer"/>
+				</entry>
+				<entry key="base64">
+					<bean class="com.apimock.consumer.adapter.impl.Base64JsonDeserializer"/>
+				</entry>
+			</util:map>
+		</constructor-arg>
+	</bean>
 		
+	<bean id="filterDeserializer" class="com.apimock.utils.json.DataTypeJsonDeserializer">
+		<constructor-arg type="java.lang.Class" value="com.apimock.manager.CustomServiceFilter"/>
+		<constructor-arg type="java.util.Map">
+			<util:map>
+				<entry key="request">
+					<bean class="com.apimock.manager.adapter.impl.RequestJsonDeserializer"/>
+				</entry>
+				<entry key="spring">
+					<bean class="com.apimock.utils.json.SpringJsonDeserializer">
+						<constructor-arg type="java.lang.Class" value="com.apimock.manager.CustomServiceFilter" />
+					</bean>
+				</entry>
+				<entry key="composite">
+					<bean class="com.apimock.utils.json.ImplementationJsonDeserializer">
+						<constructor-arg index="0" value="com.apimock.manager.CustomServiceFilter"/>
+						<constructor-arg index="1" value="com.apimock.manager.filter.CompositeServiceFilter"/>
+					</bean>
+				</entry>
+			</util:map>
+		</constructor-arg>
+	</bean>
 	
-	<bean id="gson" class="com.apimock.utils.GsonFactoryBean">
+	
+	<bean id="gson" class="com.apimock.utils.json.GsonFactoryBean">
 		<constructor-arg type="com.google.gson.GsonBuilder" ref="gsonBuilder" />
 		<constructor-arg type="java.util.List">
 			<util:list>
-		        <ref bean="jsonInputStreamDeserializer"/>
-		        <ref bean="jsonCustomMatcherDeserializer"/>
+		        <ref bean="inputStreamDeserializer"/>
+		        <ref bean="filterDeserializer"/>
 		    </util:list>
 		</constructor-arg>
 	</bean>

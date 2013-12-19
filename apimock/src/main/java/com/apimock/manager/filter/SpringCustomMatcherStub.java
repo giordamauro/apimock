@@ -6,6 +6,8 @@ import com.apimock.manager.CustomServiceFilter;
 
 public class SpringCustomMatcherStub implements CustomServiceFilter {
 
+	private static final long serialVersionUID = -7600568319444572220L;
+
 	@Override
 	public boolean evaluate(ServiceParameters serviceParameters) {
 

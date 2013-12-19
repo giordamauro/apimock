@@ -8,6 +8,8 @@ import com.apimock.manager.CustomServiceFilter;
 
 public class CompositeServiceMatcher implements CustomServiceFilter {
 
+	private static final long serialVersionUID = 7635135650776707144L;
+
 	private final CustomServiceFilter matcher1;
 
 	private final CustomServiceFilter matcher2;

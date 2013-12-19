@@ -20,6 +20,22 @@ public class MockRequest {
 		this.method = method;
 	}
 
+	public int getFilterPriority() {
+		return filterPriority;
+	}
+
+	public void setFilterPriority(int filterPriority) {
+		this.filterPriority = filterPriority;
+	}
+
+	public CustomServiceFilter getFilter() {
+		return filter;
+	}
+
+	public void setFilter(CustomServiceFilter filter) {
+		this.filter = filter;
+	}
+
 	public String getPath() {
 		return path;
 	}

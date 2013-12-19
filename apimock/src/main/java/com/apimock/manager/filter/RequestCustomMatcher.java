@@ -12,6 +12,8 @@ import com.apimock.manager.CustomServiceFilter;
 
 public class RequestCustomMatcher implements CustomServiceFilter {
 
+	private static final long serialVersionUID = -3702276726835667185L;
+
 	private final Map<String, List<String>> queryParams;
 
 	private final Map<String, List<String>> headers;

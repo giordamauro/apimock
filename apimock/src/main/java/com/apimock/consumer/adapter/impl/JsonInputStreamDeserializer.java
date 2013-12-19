@@ -6,13 +6,13 @@ import java.lang.reflect.Type;
 
 import org.apache.commons.codec.binary.Base64;
 
+import com.apimock.utils.JsonCustomDeserializer;
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-public class JsonInputStreamDeserializer implements JsonDeserializer<InputStream> {
+public class JsonInputStreamDeserializer implements JsonCustomDeserializer<InputStream> {
 
 	@Override
 	public InputStream deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -57,5 +57,11 @@ public class JsonInputStreamDeserializer implements JsonDeserializer<InputStream
 		InputStream stream = new ByteArrayInputStream(decodedBytes);
 
 		return stream;
+	}
+
+	@Override
+	public Class<InputStream> getDeserializingClass() {
+
+		return InputStream.class;
 	}
 }

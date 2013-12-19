@@ -7,16 +7,16 @@ import java.util.Map;
 import com.apimock.manager.CustomServiceFilter;
 import com.apimock.manager.filter.CompositeServiceMatcher;
 import com.apimock.manager.filter.RequestCustomMatcher;
+import com.apimock.utils.JsonCustomDeserializer;
 import com.apimock.utils.SpringXmlUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
-public class JsonCustomMatcherDeserializer implements JsonDeserializer<CustomServiceFilter> {
+public class JsonCustomMatcherDeserializer implements JsonCustomDeserializer<CustomServiceFilter> {
 
 	private Gson gson;
 
@@ -61,6 +61,12 @@ public class JsonCustomMatcherDeserializer implements JsonDeserializer<CustomSer
 
 	public void setGson(Gson gson) {
 		this.gson = gson;
+	}
+
+	@Override
+	public Class<CustomServiceFilter> getDeserializingClass() {
+
+		return CustomServiceFilter.class;
 	}
 
 }

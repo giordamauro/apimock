@@ -31,43 +31,20 @@
 	</bean>
 
 	<bean id="gsonBuilder" class="com.google.gson.GsonBuilder"/>
-	
-	<bean id="jsonInputStreamDeserializer" class="com.apimock.consumer.adapter.impl.JsonInputStreamDeserializer"/>
-	
+    
+    <bean id="jsonInputStreamDeserializer" class="com.apimock.consumer.adapter.impl.JsonInputStreamDeserializer"/>
+    
 	<bean id="jsonCustomMatcherDeserializer" class="com.apimock.manager.adapter.impl.JsonCustomMatcherDeserializer"/>
-	
-	<bean id="inputStreamClass" class="java.lang.Class" factory-method="forName"> 
-		<constructor-arg value="java.io.InputStream"/> 
-	</bean>
-	
-	<bean id="customMatcherClass" class="java.lang.Class" factory-method="forName"> 
-		<constructor-arg value="com.apimock.manager.CustomServiceFilter"/> 
-	</bean> 
-	
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-		<property name="targetObject" ref="gsonBuilder" />
-		<property name="targetMethod" value="registerTypeAdapter" />
-		<property name="arguments">
-		    <list>
-		        <ref bean="inputStreamClass"/>
-		        <ref bean="jsonInputStreamDeserializer"/>
-		    </list>
-		</property>
-	</bean>
-	
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-		<property name="targetObject" ref="gsonBuilder" />
-		<property name="targetMethod" value="registerTypeAdapter" />
-		<property name="arguments">
-		    <list>
-		        <ref bean="customMatcherClass"/>
-		        <ref bean="jsonCustomMatcherDeserializer"/>
-		    </list>
-		</property>
-	</bean>
+		
 	
 	<bean id="gson" class="com.apimock.utils.GsonFactoryBean">
 		<constructor-arg type="com.google.gson.GsonBuilder" ref="gsonBuilder" />
+		<constructor-arg type="java.util.List">
+			<util:list>
+		        <ref bean="jsonInputStreamDeserializer"/>
+		        <ref bean="jsonCustomMatcherDeserializer"/>
+		    </util:list>
+		</constructor-arg>
 	</bean>
 	
 	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">

@@ -1,16 +1,16 @@
-package com.apimock.manager.adapter.impl;
+package com.apimock.manager;
 
 import com.apimock.core.model.HttpMethod;
 
-public class MatcherIdentifier {
+public class MockRequest {
 
 	private HttpMethod method;
 
 	private String path;
 
-	private int matcherPriority;
+	private int filterPriority;
 
-	private CustomServiceMatcher matcher;
+	private CustomServiceFilter filter;
 
 	public HttpMethod getMethod() {
 		return method;
@@ -28,19 +28,19 @@ public class MatcherIdentifier {
 		this.path = path;
 	}
 
-	public CustomServiceMatcher getMatcher() {
-		return matcher;
+	public CustomServiceFilter getMatcher() {
+		return filter;
 	}
 
-	public void setMatcher(CustomServiceMatcher matcher) {
-		this.matcher = matcher;
+	public void setMatcher(CustomServiceFilter matcher) {
+		this.filter = matcher;
 	}
 
 	public int getMatcherPriority() {
-		return matcherPriority;
+		return filterPriority;
 	}
 
 	public void setMatcherPriority(int matcherPriority) {
-		this.matcherPriority = matcherPriority;
+		this.filterPriority = matcherPriority;
 	}
 }

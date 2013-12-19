@@ -6,7 +6,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import com.apimock.core.model.ServiceIdentifier;
 import com.apimock.core.model.ServiceMatcher;
 import com.apimock.core.model.ServiceParameters;
-import com.apimock.manager.adapter.impl.CustomServiceMatcher;
+import com.apimock.manager.CustomServiceFilter;
 
 public class ServiceMatcherImpl implements ServiceMatcher {
 
@@ -14,7 +14,7 @@ public class ServiceMatcherImpl implements ServiceMatcher {
 
 	private final int priority;
 
-	private CustomServiceMatcher customMatcher;
+	private CustomServiceFilter customMatcher;
 
 	public ServiceMatcherImpl(ServiceIdentifier identifier, int priority) {
 		this.identifier = identifier;
@@ -48,11 +48,11 @@ public class ServiceMatcherImpl implements ServiceMatcher {
 		return priority;
 	}
 
-	public CustomServiceMatcher getCustomMatcher() {
+	public CustomServiceFilter getCustomMatcher() {
 		return customMatcher;
 	}
 
-	public void setCustomMatcher(CustomServiceMatcher customMatcher) {
+	public void setCustomMatcher(CustomServiceFilter customMatcher) {
 		this.customMatcher = customMatcher;
 	}
 

@@ -1,17 +1,18 @@
-package com.apimock.manager.adapter.impl;
+package com.apimock.manager.filter;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import com.apimock.core.model.ServiceParameters;
+import com.apimock.manager.CustomServiceFilter;
 
-public class CompositeServiceMatcher implements CustomServiceMatcher {
+public class CompositeServiceMatcher implements CustomServiceFilter {
 
-	private final CustomServiceMatcher matcher1;
+	private final CustomServiceFilter matcher1;
 
-	private final CustomServiceMatcher matcher2;
+	private final CustomServiceFilter matcher2;
 
-	public CompositeServiceMatcher(CustomServiceMatcher customMatcher1, CustomServiceMatcher customMatcher2) {
+	public CompositeServiceMatcher(CustomServiceFilter customMatcher1, CustomServiceFilter customMatcher2) {
 		this.matcher1 = customMatcher1;
 		this.matcher2 = customMatcher2;
 	}

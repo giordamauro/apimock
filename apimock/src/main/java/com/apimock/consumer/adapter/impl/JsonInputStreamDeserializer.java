@@ -30,6 +30,9 @@ public class JsonInputStreamDeserializer implements JsonDeserializer<InputStream
 		} else if (type.equals("base64")) {
 
 			inputStream = getFromBase64(data);
+		} else {
+
+			throw new IllegalStateException(String.format("The type '%s' is not supported", type));
 		}
 
 		return inputStream;

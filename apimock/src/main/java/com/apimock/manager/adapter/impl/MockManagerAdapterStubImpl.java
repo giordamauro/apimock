@@ -7,7 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import com.apimock.core.impl.ServiceMatcherImpl;
 import com.apimock.core.model.MockResponse;
 import com.apimock.core.model.ServiceIdentifier;
+import com.apimock.manager.CustomServiceFilter;
+import com.apimock.manager.ManagerMockData;
 import com.apimock.manager.MockManagerContent;
+import com.apimock.manager.MockRequest;
 import com.apimock.manager.adapter.MockManagerAdapter;
 import com.google.gson.Gson;
 
@@ -28,9 +31,9 @@ public class MockManagerAdapterStubImpl implements MockManagerAdapter {
 
 			String bodyContent = getBodyFromRequest(request);
 
-			ManagerContent content = gson.fromJson(bodyContent, ManagerContent.class);
+			ManagerMockData content = gson.fromJson(bodyContent, ManagerMockData.class);
 
-			MatcherIdentifier identifier = content.getIdentifier();
+			MockRequest identifier = content.getRequest();
 
 			ServiceIdentifier serviceIdentifier = new ServiceIdentifier(identifier.getMethod(), identifier.getPath());
 			MockResponse response = content.getResponse();
@@ -38,7 +41,7 @@ public class MockManagerAdapterStubImpl implements MockManagerAdapter {
 
 			ServiceMatcherImpl matcher = new ServiceMatcherImpl(serviceIdentifier, matcherPriority);
 
-			CustomServiceMatcher customMatcher = identifier.getMatcher();
+			CustomServiceFilter customMatcher = identifier.getMatcher();
 			if (customMatcher != null) {
 				matcher.setCustomMatcher(customMatcher);
 			}

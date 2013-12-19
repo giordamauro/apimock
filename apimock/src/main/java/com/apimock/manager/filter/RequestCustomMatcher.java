@@ -1,4 +1,4 @@
-package com.apimock.manager.adapter.impl;
+package com.apimock.manager.filter;
 
 import java.util.List;
 import java.util.Map;
@@ -8,8 +8,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import com.apimock.core.model.ServiceParameters;
+import com.apimock.manager.CustomServiceFilter;
 
-public class RequestCustomMatcher implements CustomServiceMatcher {
+public class RequestCustomMatcher implements CustomServiceFilter {
 
 	private final Map<String, List<String>> queryParams;
 

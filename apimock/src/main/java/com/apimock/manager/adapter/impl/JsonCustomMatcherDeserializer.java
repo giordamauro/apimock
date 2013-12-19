@@ -4,6 +4,9 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
+import com.apimock.manager.CustomServiceFilter;
+import com.apimock.manager.filter.CompositeServiceMatcher;
+import com.apimock.manager.filter.RequestCustomMatcher;
 import com.apimock.utils.SpringXmlUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
@@ -13,20 +16,20 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
-public class JsonCustomMatcherDeserializer implements JsonDeserializer<CustomServiceMatcher> {
+public class JsonCustomMatcherDeserializer implements JsonDeserializer<CustomServiceFilter> {
 
 	private Gson gson;
 
 	// TODO desacoplar los Deserializers
 
 	@Override
-	public CustomServiceMatcher deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+	public CustomServiceFilter deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
 		JsonObject content = json.getAsJsonObject();
 		String type = content.get("type").getAsString();
 		JsonElement data = content.get("data");
 
-		CustomServiceMatcher customMatcher = null;
+		CustomServiceFilter customMatcher = null;
 
 		if (type.equals("request")) {
 			JsonObject requestData = data.getAsJsonObject();
@@ -43,7 +46,7 @@ public class JsonCustomMatcherDeserializer implements JsonDeserializer<CustomSer
 		} else if (type.equals("spring")) {
 
 			String xmlData = data.getAsString();
-			customMatcher = SpringXmlUtils.getBeanFromSpringContext(xmlData, CustomServiceMatcher.class);
+			customMatcher = SpringXmlUtils.getBeanFromSpringContext(xmlData, CustomServiceFilter.class);
 
 		} else if (type.equals("composite")) {
 

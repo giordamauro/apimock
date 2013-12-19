@@ -1,8 +1,10 @@
-package com.apimock.manager.adapter.impl;
+package com.apimock.manager;
+
+import java.io.Serializable;
 
 import com.apimock.core.model.ServiceParameters;
 
-public interface CustomServiceMatcher {
+public interface CustomServiceFilter extends Serializable {
 
 	boolean equals(Object object);
 

@@ -41,7 +41,7 @@
 	</bean>
 	
 	<bean id="customMatcherClass" class="java.lang.Class" factory-method="forName"> 
-		<constructor-arg value="com.apimock.manager.adapter.impl.CustomServiceMatcher"/> 
+		<constructor-arg value="com.apimock.manager.CustomServiceFilter"/> 
 	</bean> 
 	
 	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
